@@ -3,7 +3,7 @@
 // @version      0.1
 // @description  Download PDF from lecturenotes
 // @author       nithin005
-// @include      https://lecturenotes.in/notes/*
+// @include      https://lecturenotes.in/*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.1.1/jspdf.umd.min.js
 // @resource     IMPORTED_CSS https://raw.githubusercontent.com/Nithin005/lecturenotes.in-chrome-extension/master/styles.css
 // @grant        GM_getResourceText
