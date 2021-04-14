@@ -1,11 +1,14 @@
 # lecturenotes-dl.tampermonkey
-A TamperMonkey Script for downloading PDF from lecturenotes.in for free
+A TamperMonkey Script for downloading PDF from lecturenotes.in for free*.
+
 
 <p align="center">
     <img src="./assets/1.png" width="500" />
 </p>
+*Only Non-Prime Notes can be downloaded.
 
 ## Steps:
+
 1. get tampermonkey video tutorial -> https://www.tampermonkey.net/faq.php#Q100
 1. go to https://greasyfork.org/en/scripts/414016-lecturenotes-dl and click "install this script" button
 1. A new page opens, click the install button<p align="left" > <img src="./assets/2.png" width="300" /></p>
