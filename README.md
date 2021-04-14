@@ -42,7 +42,7 @@ If the mobile version of website doesn't work correctly, try switching to deskto
 
 *For Example, the mobile version of chrome web store doesn't show the **Add to chrome** button, you will need to switch to desktop mode.*
 
-### 	Common Issues:
+   ### Common Issues:
 
 #### lecturenotes.in website not loading?
 
