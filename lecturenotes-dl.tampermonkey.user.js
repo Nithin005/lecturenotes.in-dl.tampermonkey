@@ -71,7 +71,7 @@
         i++;
         if (i >= pageNodes.length - 1) {
             let titleElement = document.querySelector("head > title");
-            const filename = sanitize(titleElement.innerText, '_');
+            const filename = sanitize(titleElement.innerText || 'notes', '_');
             doc.save(filename);
 
             return;
