@@ -4,7 +4,7 @@
 // @description  Download PDF from lecturenotes
 // @author       nithin005
 // @include      https://lecturenotes.in/*
-// @require      https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.1.1/jspdf.umd.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js
 // @resource     IMPORTED_CSS https://raw.githubusercontent.com/Nithin005/lecturenotes.in-chrome-extension/master/styles.css
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
@@ -25,6 +25,24 @@
     const my_css = GM_getResourceText("IMPORTED_CSS");
     GM_addStyle(my_css);
 
+    /**
+     * sanitize filename
+     * https://gist.github.com/barbietunnie/7bc6d48a424446c44ff4
+     */
+    var illegalRe = /[\/\?<>\\:\*\|":]/g;
+    var controlRe = /[\x00-\x1f\x80-\x9f]/g;
+    var reservedRe = /^\.+$/;
+    var windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
+
+    function sanitize(input, replacement) {
+        var sanitized = input
+            .replace(illegalRe, replacement)
+            .replace(controlRe, replacement)
+            .replace(reservedRe, replacement)
+            .replace(windowsReservedRe, replacement);
+        return sanitized.split("").splice(0, 255).join("")
+    }
+    /** */
 
     function main() {
         let imgElement = pageNodes[i].querySelector("div.MuiPaper-root > div > img");
@@ -37,7 +55,15 @@
         observer.disconnect();
         let url = imgElement.src;
         if (i === 0) {
-            doc = jspdf.jsPDF('p', 'px', [imgElement.naturalWidth, imgElement.naturalHeight]);
+            const width = imgElement.naturalWidth;
+            const height = imgElement.naturalHeight;
+
+            const orientation = width > height ? 'l' : 'p';
+            doc = jspdf.jsPDF({
+                orientation,
+                unit: "px",
+                format: [width, height]
+            });
         }
         let imgProp = doc.getImageProperties(url);
         doc.addImage(imgProp.data, 'JPEG', 0, 0, imgProp.width, imgProp.height);
@@ -45,7 +71,8 @@
         i++;
         if (i >= pageNodes.length - 1) {
             let titleElement = document.querySelector("head > title");
-            doc.save(titleElement.innerText);
+            const filename = sanitize(titleElement.innerText, '_');
+            doc.save(filename);
 
             return;
         }
